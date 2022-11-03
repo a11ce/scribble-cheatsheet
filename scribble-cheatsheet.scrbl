@@ -21,7 +21,7 @@
                        (scribble-read-inside string-port)]
                       [first-arg (car (syntax-e #'(args ...)))]
                       [(code-with-lang ...)
-                       (cons "#lang scribble/base\n" #'(args ...))])
+                       (cons "#lang scribble/manual\n" #'(args ...))])
           #'(begin actual-scribble ...
                    (codeblock #:keep-lang-line? #f
                               #:context #'first-arg
@@ -102,7 +102,8 @@ ow}
 
 @subsection{Procedures and Forms}
 
-Names defined with @code{defproc} or @code{defform} will be linked to from within @code{racket}s.
+Names defined with @code{defproc}, @code{defform}, or @code{defthing}
+will be linked to from within @code{racket}s.
 
 @subsubsection{Procedures}
 
@@ -111,9 +112,9 @@ Names defined with @code{defproc} or @code{defform} will be linked to from withi
            (proc-name [arg arg/c] ...
                       [#:kwarg kwarg-val kwarg/c default])
                       result-type]{
-Within this block, things like @racket[arg] will be typeset to match
-the definition (but will error within @code{code}).
-}
+  Within this block, things like @racket[arg] will be typeset to match
+  the definition (but will error within @code{code}).
+  }
 }|
 
 Use @code{defproc*} to describe related procedures or procedures with multiple
@@ -124,7 +125,7 @@ calling cases.
              [(multi-proc (arg arg/c)) result-type-two])]
 }|
 
-@subsection{Macros etc.}
+@subsection{Syntax}
 
 @code{defform} can specify which identifier it's defining,
 typeset literals, or include a grammar.
@@ -133,19 +134,38 @@ typeset literals, or include a grammar.
   @defform[#:kind "default is syntax"
            #:id form-name
            #:literals (define)
-           (define form-name math)
+           (something-special form-name math)
            #:grammar
            [(math (op num num))
             (op plus
                 minus)]]
 }|
 
+Use @code{defform*} for multiple forms using the same identifier.
+
 @selfdoc|{
-  @defform[#:id horse (what-is-a? horse)]{
+  @defform*[((define (proc-name arg ...) body ...+)
+             (define var-name body))]
+}|
+
+@subsection{Others}
+
+Use @code{defthing} to describe non-procedure identifiers.
+
+@selfdoc|{
+  @defthing[horse animal?]{
   Everyone knows what a horse is.
   }
 }|
 
+Use @code{deftech} to define vocabulary and @code{tech}
+to link to it.
+
+@selfdoc|{
+  A @deftech{technical term} is a term that is technical.
+  An example of a @tech{technical term} is
+  @tech[#:doc '(lib "scribblings/guide/guide.scrbl")]{number}.
+}|
 
 @section{Formatting}
 
@@ -193,6 +213,11 @@ More: @code{subscript}, @code{subscript}, @code{larger}, @code{smaller}.
 @code{secref} is like seclink but you can't change the text:
 @selfdoc|{
   @secref["first-example" #:doc '(lib "scribblings/scribble/scribble.scrbl")]
+}|
+
+@code{tech} links to a term defined with @code{deftech}:
+@selfdoc|{
+  @tech{technical term}
 }|
 
 @code{other-doc} links to the top of a document:
