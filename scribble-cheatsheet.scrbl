@@ -69,7 +69,7 @@ Remember that {} converts to a string and [] doesn't.
 @subsection{Modules}
 
 @selfdoc|{
-  @defmodule[racket/list]
+  @defmodule[racket/positronics]
 }|
 
 @code{racketblock}s require S-expressions
@@ -87,7 +87,7 @@ and normalize terms (including formatting).
 @subsection[@hash-lang{}]{s}
 
 @selfdoc|{
-  @defmodulelang[scribble/manual]
+  @defmodulelang[mechanized-loom]
 }|
 
 @code{codeblock}s typeset verbatim, allow non-S-expression syntax,
