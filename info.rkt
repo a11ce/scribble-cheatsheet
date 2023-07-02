@@ -2,7 +2,7 @@
 
 (define collection "scribble-cheatsheet")
 
-(define scribblings '(("scribble-cheatsheet.scrbl")))
+(define scribblings '(("scribble-cheatsheet.scrbl" () ("Scribble Libraries"))))
 
 (define build-deps '("scribble-lib"))
 
